@@ -2,12 +2,12 @@
 """
 	Sistema shopping car::
 	>>> s = ShoppingCar()
-	>>> s.add('Corola', 50000, 'LIPE 1235')
+	>>> s.add('Corolla', 50000, 'LIPE 1235')
 	>>> len(s)
 	1
 	>>> s.lipe1235
-	<Corola 50000>
-	>>> s.add("Fusca", 1500, 'CAROL 1238')
+	<Corolla 50000>
+	>>> s.add("Fusca", 1500, 'CARO 1238')
 	>>> s.total
 	51500
 	>>> s.jkyn1299
@@ -18,6 +18,7 @@
 """
 import re
 from lista_tipada import ListaTipada
+from shopping_d import Price, CarModel, Placa, Model
 
 def placa_padrao(placa):
 	return (re.sub("\s", "", placa)).upper()
@@ -25,12 +26,10 @@ def placa_padrao(placa):
 class ShoppingCarException(Exception):
 	pass
 
-class Car(object):
-
-	def __init__(self, name, price, placa):
-		self.name = name
-		self.price = price
-		self.placa = placa
+class Car(Model):
+	name = CarModel()
+	price = Price()
+	placa = Placa()
 		
 	def __repr__(self):
 		return '<%s %s>' % (self.name, self.price)
@@ -42,7 +41,7 @@ class ShoppingCar(object):
 		"""
 			Metodo que adiciona um novo carro ao shoppingcar.
 		"""
-		self._items.append( Car(name, price, placa) )
+		self._items.append( Car(name=name, price=price, placa=placa) )
 
 	def __getattr__(self, name):
 		"""
