@@ -1,0 +1,11 @@
+Sistema de cadastrado de carros utilizando os conceitos apredidos no curso de 
+metaprog com Lucioano Ramalho http://j.mp/ppqsp.
+
+Sistema possui as fectures Basicas para funcionanmento, ele nao deve ser usado
+em PRODUCAO, ele serve apenas para estudo de como eu posso usar metaprog nos meus
+aplicativos feitos em python.
+
+Para rodar o sistema e necessario ter python >= 2.6 e os modulos:
+re
+abc
+
