@@ -1,4 +1,4 @@
-h2. ShoppingCar
+ShoppingCar
 
 Sistema de cadastrado de carros utilizando os conceitos aprendidos no curso de 
 metaprog com Luciano Ramalho http://j.mp/ppqsp.
@@ -8,7 +8,7 @@ em PRODUÇÃO, ele serve apenas para estudo de como eu posso usar metaprog nos m
 aplicativos feitos em python.
 
 
-b. Para rodar o sistema e necessário ter python >= 2.6 e os módulos:
+Para rodar o sistema e necessário ter python >= 2.6 e os módulos:
 * re
 * abc
 
