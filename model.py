@@ -11,13 +11,13 @@
     >>> class Car(Model):
     ...     price = Price()
     ...     name = CarModel()
-    ...     placa = Placa()
-    >>> car2 = Car(name='Corolla', price=5000, placa='LYDA 1456')
+    ...     license_plate = LicensePlate()
+    >>> car2 = Car(name='Corolla', price=5000, license_plate='LYDA 1456')
     >>> car2.name
     'Corolla'
     >>> car2.price
     5000
-    >>> car2.placa
+    >>> car2.license_plate
     'LYDA 1456'
     >>> car2.name = 'Fusca'
     >>> car2.name
@@ -26,17 +26,17 @@
     Traceback (most recent call last):
     ...
     ...
-    TypeError: O preco nao pode ser negativo.
-    >>> car4 = Car(name='Corolla', price=5000, placa='la1dYYo4')
+    TypeError: Price can't be negative.
+    >>> car4 = Car(name='Corolla', price=5000, license_plate='la1dYYo4')
     Traceback (most recent call last):
     ...
     ...
-    TypeError: A placa informada nao segue o padrao Brasileiro.
-    >>> car5 = Car(name='Sofa', price=10, placa='IIUU 8712')
+    TypeError: The license plate it's not a valid.
+    >>> car5 = Car(name='Sofa', price=10, license_plate='IIUU 8712')
     Traceback (most recent call last):
     ...
     ...
-    TypeError: 'Sofa' nao e um carro valido.
+    TypeError: 'Sofa' not a valid car.
 """
 import re
 from abc import abstractmethod, ABCMeta
@@ -66,7 +66,7 @@ class Price(Validate):
 
     def validation(self, instance, value):
         if value < 1:
-            raise TypeError('O preco nao pode ser negativo.')
+            raise TypeError("Price can't be negative.")
         return value
 
 
@@ -75,19 +75,20 @@ class CarModel(Validate):
 
     def validation(self, instance, value):
         if value.lower() not in self._carmodels:
-            raise TypeError("'%s' nao e um carro valido." % value)
+            raise TypeError("'%s' not a valid car." % value)
         return value
 
 
-class Placa(Validate):
+class LicensePlate(Validate):
 
     def validation(self, instance, value):
+        # Brazilian pattern
         if not re.match('\w{4}\s\d{4}', value):
-            raise TypeError("A placa informada nao segue o padrao Brasileiro.")
+            raise TypeError("The license plate it's not a valid.")
         return value
 
 
-class ModelMeta(type):
+class Meta(type):
 
     def __new__(cls, name, bases, dict):
         for name, attr, in dict.items():
@@ -97,7 +98,7 @@ class ModelMeta(type):
 
 
 class Model(object):
-    __metaclass__ = ModelMeta
+    __metaclass__ = Meta
 
     def __init__(self, **kwargs):
         for k in kwargs:

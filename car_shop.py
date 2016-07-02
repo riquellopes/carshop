@@ -1,6 +1,6 @@
 # coding: utf-8
 """
-    >>> s = ShoppingCar()
+    >>> s = CarShop()
     >>> s.add('Corolla', 50000, 'LIPE 1235')
     >>> len(s)
     1
@@ -13,15 +13,15 @@
     Traceback (most recent call last):
     ...
     ...
-    Exception: JKYN1299 ainda nao foi cadastrato no sistema.
+    Exception: JKYN1299 car not found.
 """
 import re
 from lista_tipada import ListaTipada
-from shopping_d import Price, CarModel, Placa, Model
+from model import Price, CarModel, Placa, Model
 
 
-def placa_padrao(placa):
-    return (re.sub("\s", "", placa)).upper()
+def license_plate_pattern(license_plate):
+    return (re.sub("\s", "", license_plate)).upper()
 
 
 class ShoppingCarException(Exception):
@@ -37,35 +37,33 @@ class Car(Model):
         return '<%s %s>' % (self.name, self.price)
 
 
-class ShoppingCar(object):
+class CarShop(object):
     _items = ListaTipada(Car)
 
     def add(self, name, price, placa):
         """
-            Metodo que adiciona um novo carro ao shoppingcar.
+            Method add a new car on the CarShop.
         """
         self._items.append(Car(name=name, price=price, placa=placa))
 
     def __getattr__(self, name):
         """
-            Método que recupera um carro do shopping.
+            Method get information about specific car.
         """
         for car in self._items:
-            bplaca = placa_padrao(car.placa)
-            cplaca = placa_padrao(name)
-            if bplaca == cplaca:
+            if license_plate_pattern(car.placa) == license_plate_pattern(name):
                 return car
-        raise Exception('%s ainda nao foi cadastrato no sistema.' % name.upper())
+        raise Exception('%s car not found.' % name.upper())
 
     def __len__(self):
         """
-            Método que recupera quantos carros existe no shoppingcar.
+            Method get the quantity of the cars in CarShop.
         """
         return len(self._items)
 
     @property
     def total(self):
         """
-            Metodo que verifica o valor total de carros que existem no shoppingcar.
+            Method get the total cost of the cars in CarShop.
         """
         return sum(car.price for car in self._items)
