@@ -16,8 +16,8 @@
     Exception: JKYN1299 car not found.
 """
 import re
-from lista_tipada import ListaTipada
-from model import Price, CarModel, Placa, Model
+from custom_list import CustomList
+from model import Price, CarModel, LicensePlate, Model
 
 
 def license_plate_pattern(license_plate):
@@ -31,14 +31,14 @@ class ShoppingCarException(Exception):
 class Car(Model):
     name = CarModel()
     price = Price()
-    placa = Placa()
+    placa = LicensePlate()
 
     def __repr__(self):
         return '<%s %s>' % (self.name, self.price)
 
 
 class CarShop(object):
-    _items = ListaTipada(Car)
+    _items = CustomList(Car)
 
     def add(self, name, price, placa):
         """
