@@ -91,6 +91,9 @@ class LicensePlate(Validate):
 class Meta(type):
 
     def __new__(cls, name, bases, dict):
+        """
+            - O __new__ invova 'attr.attr_name' para cada descriptor uma única vez.
+        """
         for name, attr, in dict.items():
             if isinstance(attr, Validate):
                 attr.attr_name = name
@@ -98,6 +101,9 @@ class Meta(type):
 
 
 class Model(object):
+    """
+        - Aqui dizemos que a classe Model herda de object, mas é uma instância construida por Meta.
+    """
     __metaclass__ = Meta
 
     def __init__(self, **kwargs):
